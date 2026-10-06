@@ -15,6 +15,60 @@
         </nav>
     </header>
     <main>
+        <section>
+            <h2>Frontend Learning</h2>
+            <img src="images/profile.png" alt="안형준 프로필 이미지" width="64" height="64">
+            <img
+                src="https://raw.githubusercontent.com/GilbertMoon/fullstack-web-course/main/assets/images/phase01/overview/01-fullstack-roadmap.svg"
+                alt="Full-stack 학습 로드맵"
+                width="600"
+            >
+        </section>
+        <section>
+            <h2>회원 목록</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>나이</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>김민수</td>
+                        <td>minsu@example.com</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>이서연</td>
+                        <td>seoyeon@example.com</td>
+                        <td>28</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h2>회원 등록</h2>
+            <form>
+                <div>
+                    <label for="name">이름</label>
+                    <input id="name" name="name" type="text" required>
+                </div>
+                <div>
+                    <label for="email">이메일</label>
+                    <input id="email" name="email" type="email" required>
+                </div>
+                <div>
+                    <label for="age">나이</label>
+                    <input id="age" name="age" type="number" min="1">
+                </div>
+                <button type="submit">회원 등록</button>
+            </form>
+        </section>
     </main>
     <footer>
         <p>Frontend Basic - Chapter 03</p>
