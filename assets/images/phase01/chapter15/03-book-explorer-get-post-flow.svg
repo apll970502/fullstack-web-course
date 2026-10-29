@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650">
+<style>
+.title{font:700 34px Arial,sans-serif;fill:#132238}.h{font:700 23px Arial,sans-serif;fill:#1c2d46}.t{font:500 18px Arial,sans-serif;fill:#3d4f69}
+.box{fill:#fff;stroke:#b7c5d8;stroke-width:2}.get{fill:#edf5ff;stroke:#4f7fd9;stroke-width:2}.post{fill:#fff2e8;stroke:#d9863a;stroke-width:2}
+.arr{stroke:#64748b;stroke-width:3;fill:none;marker-end:url(#a)}
+</style>
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker></defs>
+<rect width="1200" height="650" fill="#f7f9fc"/>
+<text x="60" y="62" class="title">Book Explorer GET / POST 전체 데이터 흐름</text>
+
+<rect x="60" y="120" width="1080" height="190" rx="18" ry="18" class="get"/>
+<text x="90" y="160" class="h">검색 흐름 — GET</text>
+<text x="90" y="215" class="t">검색어 입력</text><text x="240" y="215" class="t">submit</text><text x="360" y="215" class="t">fetch GET</text><text x="510" y="215" class="t">Open Library</text><text x="690" y="215" class="t">JSON docs[]</text><text x="860" y="215" class="t">books[]</text><text x="990" y="215" class="t">DOM</text>
+<path d="M180 210 H230" class="arr"/><path d="M300 210 H350" class="arr"/><path d="M445 210 H500" class="arr"/><path d="M635 210 H680" class="arr"/><path d="M805 210 H850" class="arr"/><path d="M930 210 H980" class="arr"/>
+<text x="90" y="270" class="t">Network Evidence: Method / URL / Status / Response</text>
+
+<rect x="60" y="350" width="1080" height="210" rx="18" ry="18" class="post"/>
+<text x="90" y="390" class="h">등록 요청 흐름 — POST</text>
+<text x="90" y="450" class="t">Form 입력</text><text x="225" y="450" class="t">submit</text><text x="335" y="450" class="t">Object</text><text x="445" y="450" class="t">JSON.stringify</text><text x="615" y="450" class="t">fetch POST</text><text x="765" y="450" class="t">Test API</text><text x="895" y="450" class="t">Response</text><text x="1020" y="450" class="t">UI</text>
+<path d="M170 445 H215" class="arr"/><path d="M285 445 H325" class="arr"/><path d="M395 445 H435" class="arr"/><path d="M565 445 H605" class="arr"/><path d="M705 445 H755" class="arr"/><path d="M840 445 H885" class="arr"/><path d="M970 445 H1010" class="arr"/>
+<text x="90" y="505" class="t">Network Evidence: Method / Payload / Status / Response</text>
+<text x="90" y="535" class="t">주의: POST 성공 응답 ≠ 실제 DB 영구 저장</text>
+
+<text x="60" y="610" class="t">두 흐름 모두 화면 결과만 보지 말고 Network와 Console을 함께 확인합니다.</text>
+</svg>

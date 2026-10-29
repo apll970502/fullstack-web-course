@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680">
+<style>
+  .title{font:700 34px Arial,sans-serif;fill:#132238}
+  .sub{font:500 20px Arial,sans-serif;fill:#52627a}
+  .box{fill:#fff;stroke:#b9c6d8;stroke-width:2}
+  .blue{fill:#eaf1ff;stroke:#5d86e8;stroke-width:2}
+  .green{fill:#e9f8ef;stroke:#58a777;stroke-width:2}
+  .orange{fill:#fff2e5;stroke:#d88b42;stroke-width:2}
+  .label{font:700 22px Arial,sans-serif;fill:#1a2a42}
+  .txt{font:500 18px Arial,sans-serif;fill:#33445d}
+  .arrow{stroke:#64748b;stroke-width:3;fill:none;marker-end:url(#a)}
+</style>
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker></defs>
+<rect width="1200" height="680" fill="#f7f9fc"/>
+<text x="60" y="62" class="title">Book Explorer 사전 통합 실습 구조</text>
+<text x="60" y="98" class="sub">Browser Event → HTTP API → JSON → DOM Rendering</text>
+
+<rect x="60" y="150" rx="18" ry="18" width="250" height="390" class="box"/>
+<text x="95" y="195" class="label">Browser UI</text>
+<text x="95" y="240" class="txt">검색 Form</text>
+<text x="95" y="276" class="txt">도서 목록</text>
+<text x="95" y="312" class="txt">도서 상세</text>
+<text x="95" y="348" class="txt">등록 Form</text>
+<text x="95" y="402" class="txt">Loading</text>
+<text x="95" y="438" class="txt">Empty</text>
+<text x="95" y="474" class="txt">Error / Success</text>
+
+<rect x="390" y="150" rx="18" ry="18" width="300" height="390" class="blue"/>
+<text x="430" y="195" class="label">JavaScript</text>
+<text x="430" y="240" class="txt">submit / click Event</text>
+<text x="430" y="276" class="txt">searchBooks()</text>
+<text x="430" y="312" class="txt">createBookRequest()</text>
+<text x="430" y="348" class="txt">async / await</text>
+<text x="430" y="384" class="txt">response.json()</text>
+<text x="430" y="420" class="txt">renderBooks()</text>
+<text x="430" y="456" class="txt">renderBookDetail()</text>
+
+<rect x="780" y="150" rx="18" ry="18" width="350" height="165" class="green"/>
+<text x="820" y="195" class="label">Open Library API</text>
+<text x="820" y="235" class="txt">GET /search.json</text>
+<text x="820" y="271" class="txt">JSON → docs[]</text>
+
+<rect x="780" y="375" rx="18" ry="18" width="350" height="165" class="orange"/>
+<text x="820" y="420" class="label">JSONPlaceholder</text>
+<text x="820" y="460" class="txt">POST /posts</text>
+<text x="820" y="496" class="txt">학습용 Response</text>
+
+<path d="M310 270 H390" class="arrow"/>
+<path d="M690 250 H780" class="arrow"/>
+<path d="M780 290 H690" class="arrow"/>
+<path d="M690 445 H780" class="arrow"/>
+<path d="M780 495 H690" class="arrow"/>
+<path d="M390 470 H310" class="arrow"/>
+
+<text x="60" y="610" class="sub">핵심: AI가 만든 코드를 그대로 믿지 않고 Console + Network + 화면으로 검증합니다.</text>
+</svg>
