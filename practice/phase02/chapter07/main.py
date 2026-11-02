@@ -11,6 +11,9 @@ from common.db import get_connection
 app = FastAPI(title="Chapter 07 - POST /members")
 
 
+# ---------------------------------------------------------------
+# Members: 입력/출력 모델
+# ---------------------------------------------------------------
 class MemberCreate(BaseModel):
     name: str = Field(min_length=1, max_length=100)
     email: EmailStr
@@ -21,23 +24,56 @@ class MemberResponse(MemberCreate):
     id: int
 
 
+# ---------------------------------------------------------------
+# Members: DB 함수 (SQL 은 여기에만 둔다)
+#   - cursor 를 받아서 실행만 한다.
+#   - commit / rollback 은 호출한 endpoint 가 결정한다. (Transaction 경계)
+# ---------------------------------------------------------------
+def email_exists(cursor, email: str) -> bool:
+    cursor.execute("SELECT member_id FROM members WHERE email = %s", (email,))
+    return cursor.fetchone() is not None
+
+
+def insert_member(cursor, member: MemberCreate) -> dict:
+    """parameterized INSERT + RETURNING. 생성된 row 를 dict 로 반환한다."""
+    cursor.execute(
+        """
+        INSERT INTO members (name, email, age)
+        VALUES (%s, %s, %s)
+        RETURNING member_id AS id, name, email, age
+        """,
+        (member.name, member.email, member.age),
+    )
+    row = cursor.fetchone()
+    return {"id": row[0], "name": row[1], "email": row[2], "age": row[3]}
+
+
+def select_member(cursor, member_id: int) -> dict | None:
+    cursor.execute(
+        "SELECT member_id AS id, name, email, age FROM members WHERE member_id = %s",
+        (member_id,),
+    )
+    row = cursor.fetchone()
+    if row is None:
+        return None
+    return {"id": row[0], "name": row[1], "email": row[2], "age": row[3]}
+
+
+# ---------------------------------------------------------------
+# Members: Endpoint
+# ---------------------------------------------------------------
 @app.get("/members/{member_id}", response_model=MemberResponse)
 def get_member(member_id: int):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(
-                "SELECT member_id AS id, name, email, age "
-                "FROM members WHERE member_id = %s",
-                (member_id,),
-            )
-            row = cursor.fetchone()
+            member = select_member(cursor, member_id)
     finally:
         conn.close()
 
-    if row is None:
+    if member is None:
         raise HTTPException(status_code=404, detail="회원을 찾을 수 없습니다.")
-    return {"id": row[0], "name": row[1], "email": row[2], "age": row[3]}
+    return member
 
 
 @app.post("/members", response_model=MemberResponse, status_code=201)
@@ -46,28 +82,16 @@ def create_member(member: MemberCreate):
     try:
         with conn.cursor() as cursor:
             # 1) 중복 이메일 확인 -> 409
-            cursor.execute(
-                "SELECT member_id FROM members WHERE email = %s",
-                (member.email,),
-            )
-            if cursor.fetchone():
+            if email_exists(cursor, member.email):
                 raise HTTPException(status_code=409, detail="이미 등록된 이메일입니다.")
 
-            # 2) parameterized INSERT + RETURNING
-            cursor.execute(
-                """
-                INSERT INTO members (name, email, age)
-                VALUES (%s, %s, %s)
-                RETURNING member_id AS id, name, email, age
-                """,
-                (member.name, member.email, member.age),
-            )
-            row = cursor.fetchone()
+            # 2) INSERT
+            created = insert_member(cursor, member)
 
             # 3) 성공했을 때만 확정
             conn.commit()
 
-            return {"id": row[0], "name": row[1], "email": row[2], "age": row[3]}
+            return created
     except HTTPException:
         conn.rollback()
         raise
@@ -92,22 +116,50 @@ class CourseResponse(CourseCreate):
     id: int
 
 
+def course_exists(cursor, title: str, instructor: str) -> bool:
+    cursor.execute(
+        "SELECT id FROM courses WHERE title = %s AND instructor = %s",
+        (title, instructor),
+    )
+    return cursor.fetchone() is not None
+
+
+def insert_course(cursor, course: CourseCreate) -> dict:
+    cursor.execute(
+        """
+        INSERT INTO courses (title, instructor, capacity)
+        VALUES (%s, %s, %s)
+        RETURNING id, title, instructor, capacity
+        """,
+        (course.title, course.instructor, course.capacity),
+    )
+    row = cursor.fetchone()
+    return {"id": row[0], "title": row[1], "instructor": row[2], "capacity": row[3]}
+
+
+def select_course(cursor, course_id: int) -> dict | None:
+    cursor.execute(
+        "SELECT id, title, instructor, capacity FROM courses WHERE id = %s",
+        (course_id,),
+    )
+    row = cursor.fetchone()
+    if row is None:
+        return None
+    return {"id": row[0], "title": row[1], "instructor": row[2], "capacity": row[3]}
+
+
 @app.get("/courses/{course_id}", response_model=CourseResponse)
 def get_course(course_id: int):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(
-                "SELECT id, title, instructor, capacity FROM courses WHERE id = %s",
-                (course_id,),
-            )
-            row = cursor.fetchone()
+            course = select_course(cursor, course_id)
     finally:
         conn.close()
 
-    if row is None:
+    if course is None:
         raise HTTPException(status_code=404, detail="강좌를 찾을 수 없습니다.")
-    return {"id": row[0], "title": row[1], "instructor": row[2], "capacity": row[3]}
+    return course
 
 
 @app.post("/courses", response_model=CourseResponse, status_code=201)
@@ -115,29 +167,12 @@ def create_course(course: CourseCreate):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            # 1) 중복 강좌(같은 제목 + 같은 강사) 확인 -> 409
-            cursor.execute(
-                "SELECT id FROM courses WHERE title = %s AND instructor = %s",
-                (course.title, course.instructor),
-            )
-            if cursor.fetchone():
+            if course_exists(cursor, course.title, course.instructor):
                 raise HTTPException(status_code=409, detail="이미 등록된 강좌입니다.")
 
-            # 2) parameterized INSERT + RETURNING
-            cursor.execute(
-                """
-                INSERT INTO courses (title, instructor, capacity)
-                VALUES (%s, %s, %s)
-                RETURNING id, title, instructor, capacity
-                """,
-                (course.title, course.instructor, course.capacity),
-            )
-            row = cursor.fetchone()
-
-            # 3) 성공했을 때만 확정
+            created = insert_course(cursor, course)
             conn.commit()
-
-            return {"id": row[0], "title": row[1], "instructor": row[2], "capacity": row[3]}
+            return created
     except HTTPException:
         conn.rollback()
         raise
