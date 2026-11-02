@@ -30,7 +30,7 @@ class MemberResponse(MemberCreate):
 #   - commit / rollback 은 호출한 endpoint 가 결정한다. (Transaction 경계)
 # ---------------------------------------------------------------
 def email_exists(cursor, email: str) -> bool:
-    cursor.execute("SELECT member_id FROM members WHERE email = %s", (email,))
+    cursor.execute("SELECT id FROM members WHERE email = %s", (email,))
     return cursor.fetchone() is not None
 
 
@@ -40,7 +40,7 @@ def insert_member(cursor, member: MemberCreate) -> dict:
         """
         INSERT INTO members (name, email, age)
         VALUES (%s, %s, %s)
-        RETURNING member_id AS id, name, email, age
+        RETURNING id, name, email, age
         """,
         (member.name, member.email, member.age),
     )
@@ -50,7 +50,7 @@ def insert_member(cursor, member: MemberCreate) -> dict:
 
 def select_member(cursor, member_id: int) -> dict | None:
     cursor.execute(
-        "SELECT member_id AS id, name, email, age FROM members WHERE member_id = %s",
+        "SELECT id, name, email, age FROM members WHERE id = %s",
         (member_id,),
     )
     row = cursor.fetchone()
