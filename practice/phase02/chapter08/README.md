@@ -52,4 +52,4 @@ python -m uvicorn main:app --reload
 - [x] Parameterized Query 사용
 - [x] Swagger 로 PUT / PATCH / GET 재조회 확인 (404·409·`age:"abc"` 는 자동 시험으로 확인)
 - [x] 독립 실습: PUT/PATCH /courses/{id}
-- [ ] Commit / Push
+- [x] Commit / Push
