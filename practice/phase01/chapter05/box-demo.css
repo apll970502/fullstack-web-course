@@ -1,0 +1,82 @@
+body {
+    background-color: #f1f5f9;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #1e293b;
+}
+
+/* 회원 카드 스타일 */
+.member-card {
+    background-color: white;
+    border: 2px solid #333; /* 테두리를 눈에 띄게 설정 */
+
+    /* 1. padding: 박스 '안쪽' 여백 (내용과 테두리 사이) */
+    padding: 24px;
+
+    /* 2. margin-bottom: 박스 '바깥쪽' 여백 (카드와 카드 사이의 간격) */
+    margin-bottom: 16px;
+}
+
+/* 임시 border: 영역 확인용 (확인 후 이 블록 전체 삭제) */
+h2 {
+    border: 1px solid red;
+}
+
+p {
+    border: 1px solid blue;
+}
+
+/* 4. box-sizing 비교 테스트 (확인 후 이 블록 전체 삭제) */
+.box {
+    width: 300px;
+    padding: 20px;
+    border: 2px solid black;
+    margin-bottom: 16px;
+    background-color: lightgreen;
+}
+
+.content-box {
+    box-sizing: content-box; /* 기본값: width 밖에 padding, border가 추가됨 */
+}
+
+.border-box {
+    box-sizing: border-box; /* width 안에 padding, border가 포함됨 */
+}
+
+/* 5. display 비교 테스트 (확인 후 이 블록 전체 삭제) */
+.d-block {
+    display: block;
+    background-color: lightblue;
+    margin-bottom: 8px;
+}
+
+.d-inline {
+    display: inline;
+    background-color: lightyellow;
+    padding: 20px;       /* inline은 위아래 padding이 줄 간격을 밀지 않음 */
+    width: 200px;        /* inline은 width가 무시됨 */
+}
+
+.d-inline-block {
+    display: inline-block;
+    background-color: lightgreen;
+    padding: 20px;       /* inline-block은 padding이 박스에 제대로 반영됨 */
+    width: 200px;        /* inline-block은 width가 적용됨 */
+}
+
+/* 교안 예제: 링크를 버튼처럼 (inline-block + padding) */
+.button-link {
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: #1e293b;
+    color: white;
+    text-decoration: none;
+}
+
+/* 4강 실무 설정: 모든 요소를 border-box로 (맨 마지막에 두는 것을 권장) */
+* {
+    box-sizing: border-box;
+}

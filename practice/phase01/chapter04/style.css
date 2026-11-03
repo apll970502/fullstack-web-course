@@ -1,0 +1,63 @@
+/* 3.1 태그 선택자: 같은 태그를 모두 선택합니다 */
+h1 {
+    color: white;
+}
+
+/* 3.2 클래스 선택자: 같은 이름표(class)를 가진 요소를 선택합니다 */
+.member-card {
+    background-color: lightyellow;
+}
+
+/* 3.3 아이디 선택자: id가 같은 단 하나의 요소를 선택합니다 */
+#profile-section {
+    background-color: lightblue;
+}
+
+/* 4. 색상과 배경: 글자색(color)과 배경색(background-color) */
+body {
+    color: #334155;
+    background-color: #f8fafc;
+}
+
+header {
+    background-color: #1e293b;
+    color: white;
+}
+/* 5. 폰트와 텍스트: 글꼴, 크기, 굵기, 줄 간격 */
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+p {
+    line-height: 1.6;
+}
+
+h1 {
+    text-align: center;
+}
+
+/* 7. 우선순위 테스트 */
+/* 1) 태그 선택자: 파랑 */
+p {
+    color: blue;
+}
+
+/* 2) 클래스 선택자: 초록 (태그보다 구체적) */
+.notice {
+    color: green;
+}
+
+/* 3) 아이디 선택자: 빨강 (클래스보다 구체적) */
+#important {
+    color: red;
+}
+
+/* 4) 같은 우선순위(p)면 뒤에 쓴 규칙이 이김: 파랑 -> 주황 */
+p {
+    color: orange;
+}

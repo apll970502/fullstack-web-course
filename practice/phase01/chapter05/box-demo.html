@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Model</title>
+    <link rel="stylesheet" href="box-demo.css">
+</head>
+<body>
+    <h1>Box Model: Padding &amp; Margin</h1>
+
+    <!-- 첫 번째 회원 카드 -->
+    <div class="member-card">
+        <h2>홍길동 회원</h2>
+        <p>이메일: gildong@example.com</p>
+    </div>
+
+    <!-- 두 번째 회원 카드 -->
+    <div class="member-card">
+        <h2>김영희 회원</h2>
+        <p>이메일: younghee@example.com</p>
+    </div>
+    <!-- box-sizing 비교 테스트 (확인 후 삭제) -->
+    <div class="box content-box">content-box: width 300</div>
+    <div class="box border-box">border-box: width 300</div>
+    <!-- display 비교 테스트 (확인 후 삭제) -->
+    <div class="d-demo">
+        <div class="d-block">block 1</div>
+        <div class="d-block">block 2</div>
+        <span class="d-inline">inline 1</span>
+        <span class="d-inline">inline 2</span>
+        <span class="d-inline-block">inline-block 1</span>
+        <span class="d-inline-block">inline-block 2</span>
+        <a href="#" class="button-link">링크 버튼 (inline-block)</a>
+    </div>
+</body>
+</html>

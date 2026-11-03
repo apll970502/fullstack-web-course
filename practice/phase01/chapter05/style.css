@@ -1,0 +1,62 @@
+/* STEP 01. 전체 Box Model 계산 방식 통일 */
+* {
+    box-sizing: border-box;
+}
+
+/* STEP 02. body 바깥 여백과 기본 스타일 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #222;
+}
+
+/* STEP 03. 페이지 전체 컨테이너 */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+/* STEP 04. 카드 */
+.card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+/* STEP 05. 표의 너비와 셀 공간 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+/* STEP 06. 입력 요소 */
+input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    border: 1px solid #bbb;
+}
+
+/* STEP 07. 버튼을 inline-block으로 */
+button,
+.button-link {
+    display: inline-block;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
