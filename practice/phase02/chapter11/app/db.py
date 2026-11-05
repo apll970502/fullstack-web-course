@@ -1,14 +1,13 @@
-"""SQLAlchemy Engine / Session. 접속 정보는 phase02/.env (common/db.py 와 같은 값)."""
 import os
 from pathlib import Path
 
 from dotenv import load_dotenv
 from sqlalchemy import URL, create_engine
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from sqlalchemy.orm import sessionmaker
 
+# chapter11 이 아니라 phase02 폴더의 .env 를 읽는다
 load_dotenv(Path(__file__).resolve().parent.parent.parent / ".env")
 
-# f-string 대신 URL.create: 비밀번호에 특수문자가 있어도 안전하다.
 DATABASE_URL = URL.create(
     "postgresql+psycopg",
     username=os.environ["DB_USER"],
@@ -18,13 +17,10 @@ DATABASE_URL = URL.create(
     database=os.environ["DB_NAME"],
 )
 
-# echo=True: ORM 코드 뒤에서 실제 실행되는 SQL 을 터미널에 출력 (학습용)
-engine = create_engine(
-    DATABASE_URL,
-    echo=True,
-    connect_args={"options": "-c search_path=practice,public"},
-)
+engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
+
+from sqlalchemy.orm import DeclarativeBase
 
 
 class Base(DeclarativeBase):
