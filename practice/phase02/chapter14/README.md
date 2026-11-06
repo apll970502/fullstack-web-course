@@ -54,7 +54,8 @@ python -m http.server 5500
 - [x] Origin 의 의미와 허용 Origin 설정 설명
 - [x] 실제 Frontend Origin 만 허용 (`*` 미사용)
 - [x] Browser 에 Secret 노출 없음
-- [ ] 허용하지 않은 Origin 으로 브라우저 CORS 오류 직접 확인 (STEP 04)
+- [x] 허용하지 않은 Origin 으로 브라우저 CORS 오류 직접 확인 (STEP 04, 확인 후 설정 원복)
+- [x] `127.0.0.1:5500` 으로 접속해도 허용 목록에 있어 성공함을 확인
 - [ ] POST /members 연결과 DB 확인 (STEP 06)
 - [ ] API Base URL / `CORS_ORIGINS` 환경별 분리 (5절)
-- [ ] Commit / Push
+- [x] Commit / Push
