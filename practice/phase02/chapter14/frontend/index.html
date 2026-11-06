@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 14 - Member API 연동</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; }
+    button { padding: .5rem 1rem; cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border-bottom: 1px solid #ddd; padding: .5rem; text-align: left; }
+    #status { margin: .75rem 0; color: #555; }
+    .error { color: #c0392b; }
+  </style>
+</head>
+<body>
+  <h1>회원 목록</h1>
+  <p>Frontend Origin: <code id="origin"></code></p>
+  <p>API: <code id="api"></code></p>
+  <button id="reload">목록 불러오기</button>
+  <p id="status"></p>
+  <table>
+    <thead><tr><th>ID</th><th>이름</th><th>이메일</th><th>나이</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <script>
+    // 환경에 따라 달라지는 값은 한 곳에서만 정한다
+    const API_BASE_URL = 'http://localhost:8000';
+
+    document.getElementById('origin').textContent = location.origin;
+    document.getElementById('api').textContent = API_BASE_URL;
+
+    async function loadMembers() {
+      const status = document.getElementById('status');
+      const rows = document.getElementById('rows');
+      status.className = '';
+      status.textContent = '불러오는 중...';
+      try {
+        const response = await fetch(`${API_BASE_URL}/members`);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const members = await response.json();
+        console.log(members);
+        rows.innerHTML = '';
+        for (const m of members) {
+          const tr = document.createElement('tr');
+          for (const value of [m.member_id, m.name, m.email, m.age]) {
+            const td = document.createElement('td');
+            td.textContent = value;   // textContent: 값이 HTML 로 해석되지 않게 한다
+            tr.appendChild(td);
+          }
+          rows.appendChild(tr);
+        }
+        status.textContent = `성공: ${members.length}명 (HTTP 200)`;
+      } catch (error) {
+        console.error(error);
+        status.className = 'error';
+        status.textContent = `실패: ${error.message}`;
+      }
+    }
+
+    document.getElementById('reload').addEventListener('click', loadMembers);
+    loadMembers();
+  </script>
+</body>
+</html>
